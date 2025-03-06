@@ -1,0 +1,169 @@
+/**
+ * Dark Mode Styles
+ * Author: Chris Hampton
+ */
+
+ body.dark-mode {
+  --primary-color: #4da3ff;
+  --primary-color-light: #64b5ff;
+  --secondary-color: #ccd6f6;
+  --background-light: #2d3748;
+  --text-color: #e2e8f0;
+  --text-color-light: #a0aec0;
+  --border-color: #4a5568;
+  --white: #1a202c;
+  
+  background-color: #121212;
+  color: var(--text-color);
+}
+
+/* Dark Mode Toggle Button */
+.dark-mode-toggle {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+}
+
+.dark-mode-toggle button {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--white);
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.dark-mode-toggle button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+body.dark-mode .dark-mode-toggle button {
+  background-color: var(--white);
+  color: #f1c40f; /* Yellow for the sun icon */
+}
+
+/* Hero Section */
+body.dark-mode #hero {
+  background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url("../img/hero-bg.jpg");
+}
+
+body.dark-mode #hero h1,
+body.dark-mode #hero p {
+  color: var(--text-color);
+}
+
+body.dark-mode #hero .social-links a {
+  color: var(--text-color);
+}
+
+/* Section Backgrounds */
+body.dark-mode .section-bg {
+  background-color: #1c1c1c;
+}
+
+body.dark-mode .section-title h2 {
+  color: var(--text-color);
+}
+
+body.dark-mode .section-title h2::before {
+  background: var(--border-color);
+}
+
+/* About Section */
+body.dark-mode .about .content h3 {
+  color: var(--text-color-light);
+}
+
+/* Skills Section */
+body.dark-mode .skills .progress .skill {
+  color: var(--text-color);
+}
+
+body.dark-mode .skills .progress-bar-wrap {
+  background: var(--background-light);
+}
+
+/* Resume Section */
+body.dark-mode .resume .resume-title {
+  color: var(--text-color);
+}
+
+body.dark-mode .resume .resume-item h4 {
+  color: var(--primary-color);
+}
+
+body.dark-mode .resume .resume-item h5 {
+  background: var(--background-light);
+  color: var(--text-color);
+}
+
+body.dark-mode .resume .resume-item::before {
+  background: var(--white);
+}
+
+/* Projects Section */
+body.dark-mode .project-card {
+  background-color: #1c1c1c;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+}
+
+body.dark-mode .project-header {
+  background-color: var(--primary-color);
+}
+
+body.dark-mode .code-sample {
+  background-color: #2d3748;
+}
+
+body.dark-mode pre {
+  color: #e2e8f0;
+}
+
+/* Contact Section */
+body.dark-mode .contact .info {
+  background: #1c1c1c;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+}
+
+body.dark-mode .contact .info h4 {
+  color: var(--text-color);
+}
+
+body.dark-mode .contact .info i {
+  background: var(--background-light);
+}
+
+body.dark-mode .php-email-form {
+  background: #1c1c1c;
+}
+
+body.dark-mode .form-control {
+  background-color: #2d3748;
+  border-color: #4a5568;
+  color: var(--text-color);
+}
+
+body.dark-mode .form-control:focus {
+  background-color: #2d3748;
+  color: var(--text-color);
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 0.25rem rgba(77, 163, 255, 0.25);
+}
+
+body.dark-mode .form-control::placeholder {
+  color: var(--text-color-light);
+}
+
+/* Footer */
+body.dark-mode #footer {
+  background: #1c1c1c;
+  color: var(--text-color);
+}

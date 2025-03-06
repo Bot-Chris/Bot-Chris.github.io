@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Building High-Performance Web Applications with React - Chris Hampton</title>
+
+  <style>
+    body {
+      background-color: lightyellow; /* This color shouldn't appear in your design */
+      color: black;
+    }
+    #hero {
+      min-height: 100vh;
+      display: block !important;
+      background-color: lightblue !important;
+    }
+    .container {
+      display: block !important;
+    }
+  </style>
+  
+  <!-- Favicon -->
+  <link rel="icon" href="assets/img/favicon.png">
+  
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+  
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+  
+  <!-- Highlight.js CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.7.0/styles/github.min.css">
+  
+  <!-- Custom CSS -->
+  <link href="assets/css/style.css" rel="stylesheet">
+  <link href="assets/css/dark-mode.css" rel="stylesheet">
+  <link href="assets/css/blog.css" rel="stylesheet">
+</head>
+
+<body>
+  <!-- Dark Mode Toggle -->
+  <div class="dark-mode-toggle">
+    <button id="darkModeToggle" class="btn">
+      <i class="bi bi-moon-fill"></i>
+    </button>
+  </div>
+  
+  <!-- Preloader -->
+  <div id="preloader">
+    <div class="loader">
+      <div class="loading-animation"></div>
+    </div>
+  </div>
+
+  <!-- Mobile Nav Toggle -->
+  <button class="mobile-nav-toggle d-lg-none">
+    <i class="bi bi-list"></i>
+  </button>
+
+  <!-- Header -->
+  <header id="header" class="d-flex flex-column justify-content-center">
+    <nav id="navbar" class="navbar">
+      <ul>
+        <li><a href="index.html#hero" class="nav-link scrollto"><i class="bi bi-house"></i> <span>Home</span></a></li>
+        <li><a href="index.html#about" class="nav-link scrollto"><i class="bi bi-person"></i> <span>About</span></a></li>
+        <li><a href="index.html#skills" class="nav-link scrollto"><i class="bi bi-code-slash"></i> <span>Skills</span></a></li>
+        <li><a href="index.html#resume" class="nav-link scrollto"><i class="bi bi-file-earmark-text"></i> <span>Resume</span></a></li>
+        <li><a href="index.html#projects" class="nav-link scrollto"><i class="bi bi-briefcase"></i> <span>Projects</span></a></li>
+        <li><a href="index.html#portfolio" class="nav-link scrollto"><i class="bi bi-collection"></i> <span>Portfolio</span></a></li>
+        <li><a href="blog.html" class="nav-link active"><i class="bi bi-pencil-square"></i> <span>Blog</span></a></li>
+        <li><a href="index.html#contact" class="nav-link scrollto"><i class="bi bi-envelope"></i> <span>Contact</span></a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="main">
+    <!-- Blog Post Section -->
+    <section id="blog-post" class="blog-post">
+      <div class="container" data-aos="fade-up">
+        <div class="row">
+          <div class="col-lg-8 mx-auto">
+            <article class="blog-post-content">
+              <div class="post-header">
+                <div class="post-meta">
+                  <span><i class="bi bi-calendar"></i> February 15, 2023</span>
+                  <span><i class="bi bi-tag"></i> React</span>
+                  <span><i class="bi bi-clock"></i> 5 min read</span>
+                </div>
+                <h1 class="post-title">Building High-Performance Web Applications with React</h1>
+                <div class="post-author">
+                  <img src="assets/img/IMG-0187.jpg" alt="Chris Hampton" class="img-fluid rounded-circle">
+                  <div>
+                    <h4>Chris Hampton</h4>
+                    <p>Software Developer</p>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="post-featured-image">
+                <img src="assets/img/blog/blog-1.jpg" alt="React Performance" class="img-fluid rounded">
+              </div>
+              
+              <div class="post-content">
+                <p>
+                  Performance optimization is a critical aspect of building modern web applications, especially as they grow in complexity. React provides an excellent foundation for creating interactive UIs, but it's essential to understand how to leverage its features for maximum performance. In this article, I'll share several techniques and best practices I've learned while optimizing React applications.
+                </p>
+                
+                <h2>Understanding React's Rendering Behavior</h2>
+                <p>
+                  Before diving into specific optimizations, it's important to understand how React decides when to re-render components. React's rendering process follows a simple principle: when a component's state or props change, React will re-render that component and all its children.
+                </p>
+                <p>
+                  This cascading update behavior is efficient in most cases but can lead to unnecessary renders in larger applications. The first step in optimization is identifying these unnecessary renders.
+                </p>
+                
+                <h2>Using React DevTools Profiler</h2>
+                <p>
+                  React DevTools' Profiler is an invaluable tool for identifying performance bottlenecks. It allows you to record rendering information and visualize which components are rendering and why.
+                </p>
+                <p>
+                  When profiling your application, look for:
+                </p>
+                <ul>
+                  <li>Components that render too frequently</li>
+                  <li>Rendering cascades that affect large parts of your component tree</li>
+                  <li>Components with long render times</li>
+                </ul>
+                
+                <h2>Preventing Unnecessary Re-renders</h2>
+                <p>
+                  Once you've identified components that re-render too often, there are several techniques to optimize them:
+                </p>
+                
+                <h3>1. React.memo for Functional Components</h3>
+                <p>
+                  <code>React.memo</code> is a higher-order component that memoizes your component, preventing re-renders if props haven't changed:
+                </p>
+                
+                <pre><code class="language-jsx">const MyComponent = React.memo(function MyComponent(props) {
+  /* render using props */
+});
+</code></pre>
+                
+                <p>
+                  This is particularly useful for components that render often with the same props.
+                </p>
+                
+                <h3>2. Using shouldComponentUpdate or PureComponent</h3>
+                <p>
+                  For class components, you can use <code>PureComponent</code> or implement <code>shouldComponentUpdate</code>:
+                </p>
+                
+                <pre><code class="language-jsx">class MyComponent extends React.PureComponent {
+  // PureComponent implements shouldComponentUpdate
+  // with a shallow comparison of props and state
+  render() {
+    /* render using this.props */
+  }
+}
+
+// Or with shouldComponentUpdate
+class MyComponent extends React.Component {
+  shouldComponentUpdate(nextProps, nextState) {
+    // Return true if you want it to update
+    return this.props.id !== nextProps.id;
+  }
+  
+  render() {
+    /* render using this.props */
+  }
+}</code></pre>
+                
+                <h3>3. useMemo and useCallback Hooks</h3>
+                <p>
+                  For functional components, <code>useMemo</code> and <code>useCallback</code> help prevent expensive recalculations and recreations of functions:
+                </p>
+                
+                <pre><code class="language-jsx">function MyComponent({ data, onItemClick }) {
+  // Memoize expensive calculations
+  const processedData = React.useMemo(() => {
+    return expensiveProcess(data);
+  }, [data]);
+  
+  // Memoize callbacks to prevent recreation
+  const handleClick = React.useCallback((item) => {
+    onItemClick(item.id);
+  }, [onItemClick]);
+  
+  return (
+    &lt;ul&gt;
+      {processedData.map(item => (
+        &lt;li key={item.id} onClick={() => handleClick(item)}&gt;
+          {item.name}
+        &lt;/li&gt;
+      ))}
+    &lt;/ul&gt;
+  );
+}</code></pre>
+                
+                <h2>Optimizing List Rendering</h2>
+                <p>
+                  Lists are a common source of performance issues in React applications, especially when they contain many items or complex components.
+                </p>
+                
+                <h3>1. Use Stable Keys</h3>
+                <p>
+                  Always use stable, unique keys for list items. This helps React identify which items have changed, been added, or been removed:
+                </p>
+                
+                <pre><code class="language-jsx">function ItemList({ items }) {
+  return (
+    &lt;ul&gt;
+      {items.map(item => (
+        // Use item.id, NOT index as key for stable lists
+        &lt;ListItem key={item.id} item={item} /&gt;
+      ))}
+    &lt;/ul&gt;
+  );
+}</code></pre>
+                
+                <h3>2. Virtualized Lists</h3>
+                <p>
+                  For very long lists, consider using virtualization to only render items that are visible in the viewport. Libraries like <code>react-window</code> and <code>react-virtualized</code> make this straightforward:
+                </p>
+                
+                <pre><code class="language-jsx">import { FixedSizeList } from 'react-window';
+
+function VirtualizedList({ items }) {
+  const Row = ({ index, style }) => (
+    &lt;div style={style}&gt;
+      {items[index].name}
+    &lt;/div&gt;
+  );
+
+  return (
+    &lt;FixedSizeList
+      height={500}
+      width={300}
+      itemCount={items.length}
+      itemSize={35}&gt;
+      {Row}
+    &lt;/FixedSizeList&gt;
+  );
+}</code></pre>
+                
+                <h2>Code Splitting and Lazy Loading</h2>
+                <p>
+                  As your application grows, bundle size becomes a concern. React provides built-in support for code splitting:
+                </p>
+                
+                <pre><code class="language-jsx">import React, { Suspense, lazy } from 'react';
+
+// Lazy load the component
+const HeavyComponent = lazy(() => import('./HeavyComponent'));
+
+function MyApp() {
+  return (
+    &lt;div&gt;
+      &lt;Suspense fallback={&lt;div&gt;Loading...&lt;/div&gt;}&gt;
+        &lt;HeavyComponent /&gt;
+      &lt;/Suspense&gt;
+    &lt;/div&gt;
+  );
+}</code></pre>
+                
+                <p>
+                  This technique is particularly useful for components that aren't immediately needed when your application loads, such as:
+                </p>
+                <ul>
+                  <li>Modal dialogs</li>
+                  <li>Tabs that aren't initially visible</li>
+                  <li>Content below the fold</li>
+                </ul>
+                
+                <h2>Debouncing and Throttling</h2>
+                <p>
+                  For event handlers that trigger expensive operations (like search-as-you-type), debouncing or throttling can significantly improve performance:
+                </p>
+                
+                <pre><code class="language-jsx">import { useState, useCallback } from 'react';
+import { debounce } from 'lodash';
+
+function SearchComponent() {
+  const [results, setResults] = useState([]);
+  
+  // Create a debounced version of the search function
+  const debouncedSearch = useCallback(
+    debounce(async (query) => {
+      const data = await fetchSearchResults(query);
+      setResults(data);
+    }, 300),
+    []
+  );
+  
+  return (
+    &lt;div&gt;
+      &lt;input 
+        type="text" 
+        onChange={(e) => debouncedSearch(e.target.value)} 
+        placeholder="Search..."
+      /&gt;
+      &lt;ul&gt;
+        {results.map(item => (
+          &lt;li key={item.id}&gt;{item.name}&lt;/li&gt;
+        ))}
+      &lt;/ul&gt;
+    &lt;/div&gt;
+  );
+}</code></pre>
+                
+                <h2>Conclusion</h2>
+                <p>
+                  Optimizing React applications doesn't have to be complicated. By understanding React's rendering behavior and applying these techniques where appropriate, you can build high-performance applications that provide excellent user experiences.
+                </p>
+                <p>
+                  Remember, premature optimization can lead to more complex, harder-to-maintain code. Always measure performance first, then optimize the specific components that need it.
+                </p>
+                <p>
+                  What performance optimization techniques have you found most helpful in your projects? I'd love to hear your experiences in the comments!
+                </p>
+              </div>
+              
+              <div class="post-tags">
+                <h4>Tags:</h4>
+                <a href="#" class="tag">React</a>
+                <a href="#" class="tag">Performance</a>
+                <a href="#" class="tag">JavaScript</a>
+                <a href="#" class="tag">Web Development</a>
+              </div>
+              
+              <div class="post-share">
+                <h4>Share This:</h4>
+                <a href="#" class="social-share"><i class="bi bi-twitter"></i></a>
+                <a href="#" class="social-share"><i class="bi bi-facebook"></i></a>
+                <a href="#" class="social-share"><i class="bi bi-linkedin"></i></a>
+              </div>
+              
+              <div class="post-navigation">
+                <div class="row">
+                  <div class="col-6">
+                    <a href="#" class="post-prev">
+                      <span><i class="bi bi-arrow-left"></i> Previous</span>
+                      <h5>Working with GraphQL in React Applications</h5>
+                    </a>
+                  </div>
+                  <div class="col-6 text-end">
+                    <a href="#" class="post-next">
+                      <span>Next <i class="bi bi-arrow-right"></i></span>
+                      <h5>Implementing Secure Authentication in Node.js</h5>
+                    </a>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="post-author-bio">
+                <div class="author-img">
+                  <img src="assets/img/IMG-0187.jpg" alt="Chris Hampton" class="img-fluid">
+                </div>
+                <div class="author-info">
+                  <h3>About Chris Hampton</h3>
+                  <p>
+                    Chris is a Software Developer specializing in web development and application architecture. With a background in Computer Science from Marquette University, he enjoys exploring new technologies and sharing knowledge with the development community.
+                  </p>
+                  <div class="author-social">
+                    <a href="https://github.com/bot-chris" target="_blank"><i class="bi bi-github"></i></a>
+                    <a href="https://www.linkedin.com/in/chris-hampton-756b66193/" target="_blank"><i class="bi bi-linkedin"></i></a>
+                    <a href="#"><i class="bi bi-twitter"></i></a>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="post-comments">
+                <h3>Comments (5)</h3>
+                <!-- Comment Form -->
+                <div class="comment-form-container">
+                  <h4>Leave a Comment</h4>
+                  <form class="comment-form">
+                    <div class="row">
+                      <div class="col-md-6 form-group">
+                        <input type="text" class="form-control" placeholder="Your Name" required>
+                      </div>
+                      <div class="col-md-6 form-group">
+                        <input type="email" class="form-control" placeholder="Your Email" required>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <textarea class="form-control" rows="5" placeholder="Your Comment" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Post Comment</button>
+                  </form>
+                </div>
+                
+                <!-- Comments List -->
+                <div class="comments-list">
+                  <div class="comment">
+                    <div class="comment-img">
+                      <img src="assets/img/testimonials/testimonials-1.jpg" alt="Commenter" class="img-fluid rounded-circle">
+                    </div>
+                    <div class="comment-body">
+                      <h5>Sarah Johnson <span class="comment-date">Feb 16, 2023</span></h5>
+                      <p>Great article! I've been using React.memo for a while now, but I hadn't considered virtualized lists. Will definitely try that on my next project.</p>
+                      <a href="#" class="reply-btn">Reply</a>
+                    </div>
+                  </div>
+                  
+                  <div class="comment">
+                    <div class="comment-img">
+                      <img src="assets/img/testimonials/testimonials-2.jpg" alt="Commenter" class="img-fluid rounded-circle">
+                    </div>
+                    <div class="comment-body">
+                      <h5>Mike Peters <span class="comment-date">Feb 16, 2023</span></h5>
+                      <p>I've found that proper state management is also crucial for performance. Have you tried using Redux Toolkit with selectors? It makes it much easier to prevent unnecessary renders.</p>
+                      <a href="#" class="reply-btn">Reply</a>
+                    </div>
+                    
+                    <!-- Nested Comment (Reply) -->
+                    <div class="comment comment-reply">
+                      <div class="comment-img">
+                        <img src="assets/img/IMG-0187.jpg" alt="Chris Hampton" class="img-fluid rounded-circle">
+                      </div>
+                      <div class="comment-body">
+                        <h5>Chris Hampton <span class="comment-date">Feb 17, 2023</span></h5>
+                        <p>Absolutely, Mike! Redux Toolkit with selectors is a great approach. I also like Recoil for smaller applications - it has a nice API for derived state.</p>
+                        <a href="#" class="reply-btn">Reply</a>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div class="comment">
+                    <div class="comment-img">
+                      <img src="assets/img/testimonials/testimonials-3.jpg" alt="Commenter" class="img-fluid rounded-circle">
+                    </div>
+                    <div class="comment-body">
+                      <h5>Alex Chen <span class="comment-date">Feb 18, 2023</span></h5>
+                      <p>Have you explored using Web Workers for heavy computations? It can really help keep the main thread free for UI updates.</p>
+                      <a href="#" class="reply-btn">Reply</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </article>
+          </div>
+          
+          <!-- Sidebar -->
+          <div class="col-lg-4 d-none d-lg-block">
+            <div class="blog-sidebar">
+              <div class="sidebar-widget search-widget">
+                <form>
+                  <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Search posts...">
+                    <button class="btn btn-primary" type="submit"><i class="bi bi-search"></i></button>
+                  </div>
+                </form>
+              </div>
+              
+              <div class="sidebar-widget recent-posts">
+                <h3 class="widget-title">Recent Posts</h3>
+                <ul>
+                  <li>
+                    <a href="#">
+                      <h5>Implementing Secure Authentication in Node.js</h5>
+                      <span>January 3, 2023</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#">
+                      <h5>Mastering Game Development with Unreal Engine</h5>
+                      <span>December 22, 2022</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#">
+                      <h5>Creating Responsive Layouts with CSS Grid</h5>
+                      <span>December 10, 2022</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#">
+                      <h5>Introduction to AWS Lambda Functions</h5>
+                      <span>November 28, 2022</span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+              
+              <div class="sidebar-widget categories">
+                <h3 class="widget-title">Categories</h3>
+                <ul>
+                  <li><a href="#">Web Development <span>(12)</span></a></li>
+                  <li><a href="#">JavaScript <span>(8)</span></a></li>
+                  <li><a href="#">React <span>(6)</span></a></li>
+                  <li><a href="#">Node.js <span>(5)</span></a></li>
+                  <li><a href="#">Game Development <span>(4)</span></a></li>
+                  <li><a href="#">Database <span>(3)</span></a></li>
+                  <li><a href="#">Cloud Computing <span>(3)</span></a></li>
+                </ul>
+              </div>
+              
+              <div class="sidebar-widget tags">
+                <h3 class="widget-title">Tags</h3>
+                <div class="tags-list">
+                  <a href="#" class="tag">React</a>
+                  <a href="#" class="tag">JavaScript</a>
+                  <a href="#" class="tag">Node.js</a>
+                  <a href="#" class="tag">CSS</a>
+                  <a href="#" class="tag">HTML5</a>
+                  <a href="#" class="tag">API</a>
+                  <a href="#" class="tag">AWS</a>
+                  <a href="#" class="tag">MongoDB</a>
+                  <a href="#" class="tag">SQL</a>
+                  <a href="#" class="tag">Python</a>
+                  <a href="#" class="tag">Java</a>
+                  <a href="#" class="tag">C++</a>
+                </div>
+              </div>
+              
+              <div class="sidebar-widget about-me">
+                <h3 class="widget-title">About Me</h3>
+                <div class="about-img">
+                  <img src="assets/img/IMG-0187.jpg" alt="Chris Hampton" class="img-fluid rounded">
+                </div>
+                <p>Software Developer with a passion for creating efficient, scalable, and user-friendly applications. I enjoy sharing my knowledge and experiences through this blog.</p>
+                <div class="social-links">
+                  <a href="https://github.com/bot-chris" target="_blank"><i class="bi bi-github"></i></a>
+                  <a href="https://www.linkedin.com/in/chris-hampton-756b66193/" target="_blank"><i class="bi bi-linkedin"></i></a>
+                  <a href="#"><i class="bi bi-twitter"></i></a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer id="footer">
+    <div class="container">
+      <h3>Chris Hampton</h3>
+      <p>Software Developer | Problem Solver | Tech Enthusiast</p>
+      <div class="social-links">
+        <a href="https://github.com/bot-chris" class="github" target="_blank"><i class="bi bi-github"></i></a>
+        <a href="https://www.linkedin.com/in/chris-hampton-756b66193/" class="linkedin" target="_blank"><i class="bi bi-linkedin"></i></a>
+        <a href="https://www.instagram.com/_chrishampton/" class="instagram" target="_blank"><i class="bi bi-instagram"></i></a>
+        <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
+      </div>
+      <div class="copyright">
+        &copy; Copyright <strong><span>Chris Hampton</span></strong>. All Rights Reserved
+      </div>
+    </div>
+  </footer>
+
+  <div id="preloader"></div>
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- JS Libraries -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+  <script src="https://cdn.jsdelivr.net/npm/waypoints@4.0.1/lib/noframework.waypoints.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/glightbox@3.2.0/dist/js/glightbox.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/isotope-layout@3.0.6/dist/isotope.pkgd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/swiper@8.4.5/swiper-bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/highlight.js@11.7.0/highlight.min.js"></script>
+
+  <!-- Template Main JS File -->
+  <script src="assets/js/main.js"></script>
+</body>
+
+</html>
