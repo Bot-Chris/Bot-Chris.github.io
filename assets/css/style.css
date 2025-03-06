@@ -1,3 +1,220 @@
+/*--------------------------------------------------------------
+# Header and Navigation
+--------------------------------------------------------------*/
+#header {
+  background: rgba(255, 255, 255, 0.95);
+  z-index: 997;
+  box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.1);
+  transition: all 0.5s ease;
+  padding: 15px 0;
+}
+
+#header.header-scrolled {
+  padding: 10px 0;
+  background: rgba(255, 255, 255, 0.98);
+}
+
+#header .logo {
+  font-size: 28px;
+  margin: 0;
+  padding: 0;
+  line-height: 1;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+#header .logo a {
+  color: var(--secondary-color);
+  text-decoration: none;
+}
+
+.navbar {
+  padding: 0;
+}
+
+.navbar ul {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  list-style: none;
+  align-items: center;
+}
+
+.navbar li {
+  position: relative;
+}
+
+.navbar > ul > li {
+  padding: 10px 0 10px 24px;
+}
+
+.navbar a,
+.navbar a:focus {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: "Raleway", sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--secondary-color);
+  white-space: nowrap;
+  transition: 0.3s;
+  position: relative;
+  text-decoration: none;
+}
+
+.navbar a i,
+.navbar a:focus i {
+  font-size: 12px;
+  line-height: 0;
+  margin-left: 5px;
+}
+
+.navbar a:hover,
+.navbar .active,
+.navbar .active:focus,
+.navbar li:hover > a {
+  color: var(--primary-color);
+}
+
+.navbar a:hover::before,
+.navbar .active::before,
+.navbar li:hover > a::before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  bottom: -6px;
+  left: 0;
+  background-color: var(--primary-color);
+  visibility: visible;
+  transform: scaleX(1);
+  transition: all 0.3s ease-in-out 0s;
+}
+
+/* Mobile Navigation */
+.mobile-nav-toggle {
+  display: none;
+  color: var(--secondary-color);
+  font-size: 28px;
+  cursor: pointer;
+  line-height: 0;
+  transition: 0.5s;
+}
+
+.mobile-nav-toggle.bi-x {
+  color: var(--white);
+}
+
+@media (max-width: 991px) {
+  .mobile-nav-toggle {
+    display: block;
+  }
+
+  .navbar ul {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    left: 0;
+    background: var(--white);
+    padding: 10px 0;
+    box-shadow: 0px 0px 30px rgba(127, 137, 161, 0.25);
+    overflow-y: auto;
+    transition: 0.3s;
+  }
+
+  .navbar-mobile {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.9);
+    overflow-y: auto;
+    z-index: 999;
+    transition: 0.3s;
+  }
+
+  .navbar-mobile .mobile-nav-toggle {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+  }
+
+  .navbar-mobile ul {
+    display: block;
+    position: absolute;
+    top: 55px;
+    right: 15px;
+    bottom: 15px;
+    left: 15px;
+    padding: 10px 0;
+    border-radius: 10px;
+    background-color: var(--white);
+    overflow-y: auto;
+    transition: 0.3s;
+  }
+
+  .navbar-mobile a,
+  .navbar-mobile a:focus {
+    font-size: 15px;
+    padding: 10px 20px;
+  }
+
+  .navbar-mobile a:hover::before,
+  .navbar-mobile .active::before,
+  .navbar-mobile li:hover > a::before {
+    display: none;
+  }
+
+  .navbar-mobile > ul > li {
+    padding: 0;
+  }
+}
+
+/* Dark Mode Navigation Styles */
+body.dark-mode #header {
+  background: rgba(26, 32, 44, 0.95);
+  box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.3);
+}
+
+body.dark-mode #header.header-scrolled {
+  background: rgba(26, 32, 44, 0.98);
+}
+
+body.dark-mode #header .logo a {
+  color: var(--text-color);
+}
+
+body.dark-mode .navbar a,
+body.dark-mode .navbar a:focus {
+  color: var(--text-color);
+}
+
+body.dark-mode .navbar a:hover,
+body.dark-mode .navbar .active,
+body.dark-mode .navbar .active:focus,
+body.dark-mode .navbar li:hover > a {
+  color: var(--primary-color);
+}
+
+body.dark-mode .mobile-nav-toggle {
+  color: var(--text-color);
+}
+
+body.dark-mode .navbar-mobile {
+  background: rgba(0, 0, 0, 0.9);
+}
+
+body.dark-mode .navbar-mobile ul {
+  background-color: var(--white);
+}
+
+/* Adjustments for Hero Section with Navigation */
+#hero {
+  padding-top: 82px;
+}
 /* Custom Styles */
 :root {
   --primary-color: #0563bb;

@@ -340,6 +340,78 @@ function initContactForm() {
 }
 
 /**
+ * Handle navigation menu behavior
+ */
+function initNavigation() {
+  // Select header element
+  const header = document.querySelector('#header');
+  
+  // Add header-scrolled class on scroll
+  const toggleHeaderClass = () => {
+    if (window.scrollY > 100) {
+      header.classList.add('header-scrolled');
+    } else {
+      header.classList.remove('header-scrolled');
+    }
+  };
+  
+  // Add scroll event listener
+  window.addEventListener('scroll', toggleHeaderClass);
+  
+  // Check initial state
+  toggleHeaderClass();
+  
+  // Mobile navigation toggle
+  const navbarLinks = document.querySelectorAll('.nav-link');
+  const mobileNavToggle = document.querySelector('.mobile-nav-toggle');
+  const navbar = document.querySelector('#navbar');
+  
+  // Toggle mobile menu
+  if (mobileNavToggle) {
+    mobileNavToggle.addEventListener('click', () => {
+      navbar.classList.toggle('navbar-mobile');
+      mobileNavToggle.classList.toggle('bi-list');
+      mobileNavToggle.classList.toggle('bi-x');
+    });
+  }
+  
+  // Close mobile menu when clicking a nav link
+  navbarLinks.forEach(link => {
+    link.addEventListener('click', function() {
+      if (navbar.classList.contains('navbar-mobile')) {
+        navbar.classList.remove('navbar-mobile');
+        mobileNavToggle.classList.toggle('bi-list');
+        mobileNavToggle.classList.toggle('bi-x');
+      }
+      
+      // Update active link
+      navbarLinks.forEach(navLink => navLink.classList.remove('active'));
+      this.classList.add('active');
+    });
+  });
+  
+  // Update active link on scroll
+  const navbarlinksActive = () => {
+    let position = window.scrollY + 200;
+    
+    navbarLinks.forEach(navbarlink => {
+      if (!navbarlink.hash) return;
+      
+      const section = document.querySelector(navbarlink.hash);
+      if (!section) return;
+      
+      if (position >= section.offsetTop && position <= (section.offsetTop + section.offsetHeight)) {
+        navbarlink.classList.add('active');
+      } else {
+        navbarlink.classList.remove('active');
+      }
+    });
+  };
+  
+  window.addEventListener('scroll', navbarlinksActive);
+  window.addEventListener('load', navbarlinksActive);
+}
+/**
  * Initialize all functions when the DOM is fully loaded
  */
 document.addEventListener('DOMContentLoaded', function() {
@@ -347,4 +419,5 @@ document.addEventListener('DOMContentLoaded', function() {
   initProgressBars();
   initSmoothScrolling();
   initContactForm();
+  initNavigation();
 });
