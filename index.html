@@ -249,45 +249,48 @@
           <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
             <div class="project-card">
               <div class="project-header">
-                <h3>Unreal Engine FPS Game</h3>
+                <h3>CockdailDB API</h3>
               </div>
               <div class="project-body">
-                <p>A first-person shooter game developed using Unreal Engine with custom game mechanics and level design.</p>
+                <p>This project uses a modern tech stack with React for the front end and Node.js/Express for the back end</p>
                 <h5>Technical Highlights:</h5>
                 <ul>
-                  <li>Implemented game mechanics using C++ and Unreal's Blueprint system</li>
-                  <li>Created custom AI behavior for enemy NPCs</li>
-                  <li>Optimized performance for smooth gameplay</li>
+                  <li>he deployment process involves hosting the front end on AWS S3 with CloudFront as the CDN and deploying the back end on an EC2 instance within a VPC.</li>
+                  <li>Automated testing with Jest and Supertest ensures the robustness of the API endpoints, which provide functionalities for searching and filtering cocktails from The Cocktail DB.</li>
                 </ul>
                 <div class="code-sample">
                   <h6>Code Snippet:</h6>
-                  <pre>// Player movement controller implementation
-void APlayerCharacter::Move(const FInputActionValue& Value)
-{
-    // Input is a Vector2D
-    FVector2D MovementVector = Value.Get<FVector2D>();
-
-    if (Controller != nullptr)
-    {
-        // Find forward and right vectors
-        const FRotator Rotation = Controller->GetControlRotation();
-        const FRotator YawRotation(0, Rotation.Yaw, 0);
-
-        // Get forward and right vectors
-        const FVector ForwardDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
-        const FVector RightDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
-
-        // Add movement 
-        AddMovementInput(ForwardDirection, MovementVector.Y);
-        AddMovementInput(RightDirection, MovementVector.X);
-    }
-}</pre>
+                  <pre>// Filter by Category
+                    app.get('/filter/category', async (req, res) => {
+                        const { category } = req.query;
+                    
+                        if (!category) {
+                            return res.status(400).json({ error: 'Category query parameter is required' });
+                        }
+                    
+                        const apiUrl = `https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=${encodeURIComponent(category)}`;
+                    
+                        try {
+                            const response = await axios.get(apiUrl);
+                            const cocktails = response.data.drinks; // Assuming this is the array of cocktails
+                    
+                            // Implement pagination
+                            const { page = 1, limit = 10 } = req.query;
+                            const startIndex = (page - 1) * limit;
+                            const endIndex = page * limit;
+                            const paginatedCocktails = cocktails.slice(startIndex, endIndex);
+                    
+                            res.json(paginatedCocktails);
+                        } catch (error) {
+                            return res.status(500).json({ error: 'Failed to fetch data from The Cocktail DB' });
+                        }
+                    });</pre>
                 </div>
                 <div class="project-links mt-3">
-                  <a href="https://github.com/bot-chris/unreal-fps-game" class="btn btn-sm btn-outline-primary" target="_blank">
+                  <a href="https://github.com/Bot-Chris/cocktailAPI" class="btn btn-sm btn-outline-primary" target="_blank">
                     <i class="bi bi-github"></i> View Code
                   </a>
-                  <a href="portfolio-details.html" class="btn btn-sm btn-primary">
+                  <a href="https://docs.google.com/document/d/1uAFl2hElN9KqIRlDH9A47FO-uSpCmSxYg9dYKE1gHbs/edit?usp=sharing" class="btn btn-sm btn-primary">
                     <i class="bi bi-info-circle"></i> Project Details
                   </a>
                 </div>
